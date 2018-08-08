@@ -25,7 +25,7 @@ describe("Blog Posts", function() {
     // if we add another test module that also has a `before` block
     // that starts our server, it will cause an error because the
     // server would still be running from the previous tests.
-    after(function() {
+    after( function() {
       return closeServer();
     });
   
@@ -64,10 +64,10 @@ describe("Blog Posts", function() {
     //  status code and that the returned object has an `id`
     it("should add a blog on POST", function() {
       const newItem = { 
-        name: "coffee", 
-        content: "lorem ipsum", 
-        author: "Lesley Dreyer", 
-        publishDate: "07252018" 
+        "title": "coffee", 
+        "content": "lorem ipsum", 
+        "author": "Lesley Dreyer",  
+        "publishDate": "07252018" 
       };
       return chai
         .request(app)
@@ -77,11 +77,11 @@ describe("Blog Posts", function() {
           expect(res).to.have.status(201);
           expect(res).to.be.json;
           expect(res.body).to.be.a("object");
-          res.body.should.include.keys("id", "title", "content", "author", "publishDate");
+          //res.body.should.include.keys("id", "title", "content", "author", "publishDate");
           expect(res.body.id).to.not.equal(null);
           // response should be deep equal to `newItem` from above if we assign
           // `id` to it from `res.body.id`
-          res.body.should.deep.equal(Object.assign(newItem, { id: res.body.id }));
+          expect(res.body).to.deep.equal(Object.assign(newItem, { id: res.body.id }));
         });
     });
 
@@ -109,7 +109,7 @@ describe("Blog Posts", function() {
       // request to the app, we update it with an `id` property so
       // we can make a second, PUT call to the app.
       const updateData = {
-        name: "fooName",
+        title: "fooName",
         content: "fooContent",
         author: "fooAuthor",
         publishDate: "fooDate" 
@@ -136,9 +136,9 @@ describe("Blog Posts", function() {
           // and returns updated item
           .then(function(res) {
             expect(res).to.have.status(204);
-            expect(res).to.be.json;
-            expect(res.body).to.be.a("object");
-            expect(res.body).to.deep.equal(updateData);
+            //expect(res).to.be.json;
+            //expect(res.body).to.be.a("object");
+            //expect(res.body).to.deep.equal(updateData);
           })
       );
     });

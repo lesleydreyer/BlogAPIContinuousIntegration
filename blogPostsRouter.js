@@ -28,10 +28,11 @@ router.get('/', (req, res) => {
 //and return with 201
 router.post('/', jsonParser, (req, res) => {
     //ensure correct fields in request body
+    console.log("request body", req.body);
     const requiredFields = ['title', 'content', 'author'];
     for (let i=0; i<requiredFields.length; i++) {
         const field = requiredFields[i];
-        if (!(field in req.body)) {
+        if (!(req.body.hasOwnProperty(field))) { //(!(field in req.body)) {
             const message = `Missing \`${field}\` in request body`;
             console.error(message);
             return res.status(400).send(message);
@@ -55,7 +56,7 @@ router.put('/:id', jsonParser, (req, res) => {
     const requiredFields = ['title', 'content', 'author', 'id'];
     for (let i=0; i<requiredFields.length; i++) {
         const field = requiredFields[i];
-        if (!(field in req.body)) {
+        if (!(req.body.hasOwnProperty(field))) { //(!(field in req.body)) {
             const message = `Missing \`${field}\` in request body`;
             console.error(message);
             return res.status(400).send(message);
